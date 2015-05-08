@@ -6,11 +6,13 @@ This module allows you to render an extra field as a real field (with field labe
 Description
 -----------
 
-The extra fields that can be attached to the entity hook_field_extra_fields() lack
+The extra fields that can be attached to the entity using hook_field_extra_fields() lack
 the overall look and feel of real fields because real fields have labels and a theme
-around them while extra fields look pretty bare. In order utilize the "field" theme
-around extra fields, this module allows you to add "#pseudo_field" attribute to an
-extra field render array and it will be themed with "field" theme.
+around them while extra fields look pretty bare.
+
+In order to utilize the "field" theme around extra fields, this module allows you to add
+"#pseudo_field" attribute to the extra field render array and it will be themed with the
+"field" theme.
 
 Note: If extra field render array has children arrays, they will be rendered as a multiple
 value field.
