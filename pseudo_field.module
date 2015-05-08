@@ -1,0 +1,114 @@
+<?php
+/**
+ * @file
+ * Module file for Pseudo field module.
+ */
+
+/**
+ * Implements hook_field_attach_view_alter().
+ *
+ * Adds a pre_render function so that extra fields can be accessed in fields view context
+ */
+function pseudo_field_field_attach_view_alter(&$output, $context) {
+  $output['#pre_render'][] = 'pseudo_field_extra_field_pre_render';
+}
+
+/**
+ * Theme extra fields as real fields if an extra field has an "#pseudo_field"
+ * attribute set to TRUE.
+ *
+ * @param $element array
+ *   Extra field element array.
+ *
+ * @return array
+ *   Extra field element array.
+ */
+function pseudo_field_extra_field_pre_render($elements) {
+  // Theme extra field as a real field only in view mode.
+  if (isset($elements['#view_mode'])) {
+    // Loop through fields.
+    foreach (element_children($elements) as $name) {
+      // Check if extra field needs to be themed as a real field.
+      if (!empty($elements[$name]['#pseudo_field'])) {
+        // Set the context for renderer.
+        $context = array(
+          'entity_type' => $elements['#entity_type'],
+          'bundle' => $elements['#bundle'],
+          'view_mode' => $elements['#view_mode'],
+          'field_name' => $name,
+          'field_name_prefix' => (isset($elements[$name]['#field_name_prefix']) ? $elements[$name]['#field_name_prefix'] : NULL),
+        );
+        $elements[$name] = pseudo_field_extra_field_process($elements[$name], $context);
+      }
+    }
+  }
+
+  return $elements;
+}
+
+/**
+ * Process the extra field to look like a real field.
+ *
+ * @param $element array
+ *   Extra field element array.
+ * @param $context array
+ *   Context of the extra field.
+ *
+ * @return array
+ *   Extra field element array.
+ */
+function pseudo_field_extra_field_process($element, $context) {
+  // Return original element if context values are missing.
+  if (empty($context['entity_type']) || empty($context['bundle']) || empty($context['view_mode']) || empty($context['field_name'])) {
+    return $element;
+  }
+
+  // Get context values.
+  $entity_type = $context['entity_type'];
+  $bundle = $context['bundle'];
+  $view_mode = $context['view_mode'];
+  // Set field name prefix.
+  $field_name_prefix = (isset($context['field_name_prefix']) ? $context['field_name_prefix'] : 'extra-field-');
+  $field_name = $field_name_prefix . $context['field_name'];
+  // Set label display.
+  if (isset($element['#label_display'])) {
+    $label_display = $element['#label_display'];
+  }
+  elseif (isset($element['#title'])) {
+    $label_display = 'above';
+  }
+  else {
+    $label_display = 'hidden';
+  }
+
+  // Transform to field element.
+  $extra_element = $element + array(
+    '#theme' => 'field',
+    '#view_mode' => $view_mode,
+    '#entity_type' => $entity_type,
+    '#bundle' => $bundle,
+    '#field_name' => $field_name,
+    '#field_type' => 'extra_field',
+    '#label_display' => $label_display,
+  );
+
+  if ($children = element_children($extra_element, TRUE)) {
+    // Without #children children will not show up.
+    $extra_element['#children'] = '';
+    // Loop through element children.
+    foreach ($children as $key) {
+      // Only keys in #items are required.
+      $extra_element['#items'][$key] = array();
+      // Add rendered content to child element.
+      $extra_element[$key] = array('#markup' => drupal_render($element[$key]));
+    }
+  }
+  else {
+    // Only keys in #items are required.
+    $extra_element['#items'][0] = array();
+    // Add rendered content to child element.
+    $extra_element[0]['#markup'] = drupal_render($element);
+  }
+
+  return $extra_element;
+}
