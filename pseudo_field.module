@@ -7,21 +7,23 @@
 /**
  * Implements hook_field_attach_view_alter().
  *
- * Adds a pre_render function so that extra fields can be accessed in fields view context
+ * Adds a pre_render function so that extra fields can be accessed in fields
+ * view context.
  */
 function pseudo_field_field_attach_view_alter(&$output, $context) {
   $output['#pre_render'][] = 'pseudo_field_extra_field_pre_render';
 }
 
 /**
- * Theme extra fields as real fields if an extra field has an "#pseudo_field"
- * attribute set to TRUE.
+ * Identify arrays with "#pseudo_field" attribute and theme them as real fields.
  *
- * @param $element array
+ * @param array $elements
  *   Extra field element array.
  *
  * @return array
  *   Extra field element array.
+ *
+ * @see pseudo_field_extra_field_process()
  */
 function pseudo_field_extra_field_pre_render($elements) {
   // Theme extra field as a real field only in view mode.
@@ -49,9 +51,9 @@ function pseudo_field_extra_field_pre_render($elements) {
 /**
  * Process the extra field to look like a real field.
  *
- * @param $element array
+ * @param array $element
  *   Extra field element array.
- * @param $context array
+ * @param array $context
  *   Context of the extra field.
  *
  * @return array
