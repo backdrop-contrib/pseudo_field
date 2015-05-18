@@ -82,18 +82,20 @@ function pseudo_field_extra_field_process($element, $context) {
     }
   }
   // Set label display.
-  if (isset($element['#label_display'])) {
-    $label_display = $element['#label_display'];
-  }
-  elseif (isset($element['#title'])) {
-    $label_display = 'above';
+  if (isset($element['#title']) && $element['#title'] != '') {
+    if (isset($element['#label_display'])) {
+      $label_display = $element['#label_display'];
+    }
+    else {
+      $label_display = 'above';
+    }
   }
   else {
     $label_display = 'hidden';
   }
 
   // Transform to field element.
-  $extra_element = $element + array(
+  $extra_element = array(
     '#theme' => 'field',
     '#view_mode' => $view_mode,
     '#entity_type' => $entity_type,
@@ -101,7 +103,7 @@ function pseudo_field_extra_field_process($element, $context) {
     '#field_name' => $field_name,
     '#field_type' => 'extra_field',
     '#label_display' => $label_display,
-  );
+  ) + $element;
 
   if ($children = element_children($extra_element, TRUE)) {
     // Without #children children will not show up.

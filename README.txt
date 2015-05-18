@@ -27,9 +27,10 @@ will be rendered with the "field" theme.
 extra field defined in hook_field_extra_fields().
 3. "#label_display" - defines the position of the extra field label. Available
 options are: "above", "inline" and "hidden". Defaults to "above" if "#title"
-attribute is set, "hidden" if "#title" attribute is not set. (Unfortunately,
-field label position cannot be set for extra fields in entity's view mode
-settings, so this option enables you to set the label position as needed.)
+attribute is set, "hidden" if value of "#title" attribute is empty.
+(Unfortunately, field label position cannot be set for extra fields in entity's
+view mode settings, so this option enables you to set the label position as
+needed.)
 
 Example
 -------
