@@ -1,3 +1,4 @@
 name = Pseudo field
 description = Allows extra fields look like real fields.
 core = 7.x
+files[] = tests/pseudo_field.test

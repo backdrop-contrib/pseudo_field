@@ -1,0 +1,8 @@
+name = Pseudo field Test
+description = Provides sample data for Pseudo field module test cases.
+core = 7.x
+package = Testing
+dependencies[] = field
+dependencies[] = text
+dependencies[] = pseudo_field
+hidden = TRUE
