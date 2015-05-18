@@ -72,6 +72,15 @@ function pseudo_field_extra_field_process($element, $context) {
   // Set field name prefix.
   $field_name_prefix = (isset($context['field_name_prefix']) ? $context['field_name_prefix'] : 'extra-field-');
   $field_name = $field_name_prefix . $context['field_name'];
+  // If "#title" attribute is non-existing, set name of the extra field as the
+  // value of "#title" attribute.
+  if (!isset($element['#title'])) {
+    $extra_fields = field_info_extra_fields($entity_type, $bundle, 'display');
+
+    if (isset($extra_fields[$context['field_name']]['label'])) {
+      $element['#title'] = $extra_fields[$context['field_name']]['label'];
+    }
+  }
   // Set label display.
   if (isset($element['#label_display'])) {
     $label_display = $element['#label_display'];
