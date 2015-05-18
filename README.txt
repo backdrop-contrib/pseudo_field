@@ -23,7 +23,8 @@ Usage
 
 1. "#pseudo_field" - if this attribute is set to TRUE, extra field render array
 will be rendered with the "field" theme.
-2. "#title" - field label for the extra field.
+2. "#title" - field label for the extra field. Defaults to the label of the
+extra field defined in hook_field_extra_fields().
 3. "#label_display" - defines the position of the extra field label. Available
 options are: "above", "inline" and "hidden". Defaults to "above" if "#title"
 attribute is set, "hidden" if "#title" attribute is not set. (Unfortunately,
