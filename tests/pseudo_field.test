@@ -179,23 +179,23 @@ class PseudoFieldTestCase extends PseudoFieldWebTestCase {
     // element is visible.
     foreach (array('inline', 'above', 'hidden') as $position) {
       $variables = $this->xpathVariables + array(
-          ':pseudo_field_class' => 'field-name-extra-field-single-value-field-label-' . $position,
+          ':pseudo_field_class' => 'field-name-single-value-field-label-' . $position,
           ':label_class' => 'field-label-' . $position,
           ':label_element_class' => 'field-label',
         );
       // Test whether correct label class is set.
       $element_found = $this->xpath($this->xpathRoot . '/div[contains(@class, :pseudo_field_class) and contains(@class, :label_class)]', $variables);
-      $this->assertTrue($element_found, 'Extra field with "#language_display" attribute value set to "' . $position . '" has correct label class set.');
+      $this->assertTrue($element_found, 'Extra field with "#title_display" attribute value set to "' . $position . '" has correct label class set.');
 
       // Test whether label element is visible.
       $element_found = $this->xpath($this->xpathRoot . '/div[contains(@class, :pseudo_field_class)]/div[contains(@class, :label_element_class)]', $variables);
-      $this->assertTrue($position != 'hidden' ? $element_found : !$element_found, 'Extra field with "#language_display" attribute value set to "' . $position . '" has label correctly displayed.');
+      $this->assertTrue($position != 'hidden' ? $element_found : !$element_found, 'Extra field with "#title_display" attribute value set to "' . $position . '" has label correctly displayed.');
     }
 
     // Test custom label is output for extra field with "#pseudo_field"
     // and "#title" attributes.
     $variables = $this->xpathVariables + array(
-      ':pseudo_field_class' => 'field-name-extra-field-single-value-field-custom-title',
+      ':pseudo_field_class' => 'field-name-single-value-field-custom-title',
       ':label_class' => 'field-label',
     );
     $title = (string) current($this->xpath($this->xpathRoot . '/div[contains(@class, :pseudo_field_class)]/div[contains(@class, :label_class)]', $variables));
@@ -204,7 +204,7 @@ class PseudoFieldTestCase extends PseudoFieldWebTestCase {
     // Test custom label is not output for extra field with "#pseudo_field"
     // attribute and "#title" attribute set to an empty string.
     $variables = $this->xpathVariables + array(
-        ':pseudo_field_class' => 'field-name-extra-field-single-value-field-label-with-empty-title',
+        ':pseudo_field_class' => 'field-name-single-value-field-label-with-empty-title',
         ':label_class' => 'field-label',
       );
     $element_found = $this->xpath($this->xpathRoot . '/div[contains(@class, :pseudo_field_class)]/div[contains(@class, :label_class)]', $variables);
@@ -213,7 +213,7 @@ class PseudoFieldTestCase extends PseudoFieldWebTestCase {
     // Test number of field items that stem from multi-dimensional extra field
     // array.
     $variables = $this->xpathVariables + array(
-      ':pseudo_field_class' => 'field-name-extra-field-multi-values-field',
+      ':pseudo_field_class' => 'field-name-multi-values-field',
       ':items_class' => 'field-items',
       ':item_class' => 'field-item',
     );

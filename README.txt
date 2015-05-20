@@ -31,6 +31,12 @@ attribute is set, "hidden" if value of "#title" attribute is empty.
 (Unfortunately, field label position cannot be set for extra fields in entity's
 view mode settings, so this option enables you to set the label position as
 needed.)
+4. "#field_name" - defines a field name which is used in "field-name-FIELDNAME"
+class of the field HTML element. Defaults to the extra field key defined in
+hook_field_extra_fields().
+5. "#field_type" - defines the type of the field which is used in
+"field-type-FIELDTYPE" class of the field HTML element. Defaults to
+"extra_field".
 
 Example
 -------

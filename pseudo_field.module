@@ -37,8 +37,7 @@ function pseudo_field_extra_field_pre_render($elements) {
           'entity_type' => $elements['#entity_type'],
           'bundle' => $elements['#bundle'],
           'view_mode' => $elements['#view_mode'],
-          'field_name' => $name,
-          'field_name_prefix' => (isset($elements[$name]['#field_name_prefix']) ? $elements[$name]['#field_name_prefix'] : NULL),
+          'field_machine_name' => $name,
         );
         $elements[$name] = pseudo_field_extra_field_process($elements[$name], $context);
       }
@@ -61,27 +60,21 @@ function pseudo_field_extra_field_pre_render($elements) {
  */
 function pseudo_field_extra_field_process($element, $context) {
   // Return original element if context values are missing.
-  if (empty($context['entity_type']) || empty($context['bundle']) || empty($context['view_mode']) || empty($context['field_name'])) {
+  if (empty($context['entity_type']) || empty($context['bundle']) || empty($context['view_mode']) || empty($context['field_machine_name'])) {
     return $element;
   }
 
-  // Get context values.
-  $entity_type = $context['entity_type'];
-  $bundle = $context['bundle'];
-  $view_mode = $context['view_mode'];
-  // Set field name prefix.
-  $field_name_prefix = (isset($context['field_name_prefix']) ? $context['field_name_prefix'] : 'extra-field-');
-  $field_name = $field_name_prefix . $context['field_name'];
   // If "#title" attribute is non-existing, set name of the extra field as the
   // value of "#title" attribute.
   if (!isset($element['#title'])) {
-    $extra_fields = field_info_extra_fields($entity_type, $bundle, 'display');
+    $extra_fields = field_info_extra_fields($context['entity_type'], $context['bundle'], 'display');
 
-    if (isset($extra_fields[$context['field_name']]['label'])) {
-      $element['#title'] = $extra_fields[$context['field_name']]['label'];
+    if (isset($extra_fields[$context['field_machine_name']]['label'])) {
+      $element['#title'] = $extra_fields[$context['field_machine_name']]['label'];
     }
   }
-  // Set label display.
+
+  // Set position of the label.
   if (isset($element['#title']) && $element['#title'] != '') {
     if (isset($element['#label_display'])) {
       $label_display = $element['#label_display'];
@@ -94,31 +87,43 @@ function pseudo_field_extra_field_process($element, $context) {
     $label_display = 'hidden';
   }
 
-  // Transform to field element.
-  $extra_element = array(
+  // Copy all values from $element.
+  $extra_element = $element;
+
+  // Add attributes required by the "field" theme. This overrides attributes
+  // set in $element. "#theme" attribute is only overridden for the
+  // $extra_element, therefore "#theme" attribute in $element is preserved and
+  // used in rendering of $element.
+  $overrides = array(
     '#theme' => 'field',
-    '#view_mode' => $view_mode,
-    '#entity_type' => $entity_type,
-    '#bundle' => $bundle,
-    '#field_name' => $field_name,
-    '#field_type' => 'extra_field',
+    '#view_mode' => $context['view_mode'],
+    '#entity_type' => $context['entity_type'],
+    '#bundle' => $context['bundle'],
     '#label_display' => $label_display,
-  ) + $element;
+    '#field_name' => (isset($element['#field_name']) ? check_plain($element['#field_name']) : $context['field_machine_name']),
+    '#field_type' => (isset($element['#field_type']) ? check_plain($element['#field_type']) : 'extra_field'),
+  );
+  $extra_element =  $overrides + $extra_element;
 
   if ($children = element_children($extra_element, TRUE)) {
     // Without #children children will not show up.
     $extra_element['#children'] = '';
+
     // Loop through element children.
     foreach ($children as $key) {
-      // Only keys in #items are required.
+      // Only keys in "#items" attribute are required in
+      // template_preprocess_field().
       $extra_element['#items'][$key] = array();
+
       // Add rendered content to child element.
       $extra_element[$key] = array('#markup' => drupal_render($element[$key]));
     }
   }
   else {
-    // Only keys in #items are required.
+    // Only keys in "#items" attribute are required in
+    // template_preprocess_field().
     $extra_element['#items'][0] = array();
+
     // Add rendered content to child element.
     $extra_element[0]['#markup'] = drupal_render($element);
   }
