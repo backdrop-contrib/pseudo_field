@@ -15,7 +15,7 @@ function pseudo_field_field_attach_view_alter(&$output, $context) {
 }
 
 /**
- * Identify arrays with "#pseudo_field" attribute and theme them as real fields.
+ * Identify arrays with "#pseudo_field" property and theme them as real fields.
  *
  * @param array $elements
  *   Extra field element array.
@@ -64,8 +64,8 @@ function pseudo_field_extra_field_process($element, $context) {
     return $element;
   }
 
-  // If "#title" attribute is non-existing, set name of the extra field as the
-  // value of "#title" attribute.
+  // If "#title" property is non-existing, set the label of the extra field as
+  // a value of "#title" property.
   if (!isset($element['#title'])) {
     $extra_fields = field_info_extra_fields($context['entity_type'], $context['bundle'], 'display');
 
@@ -90,9 +90,9 @@ function pseudo_field_extra_field_process($element, $context) {
   // Copy all values from $element.
   $extra_element = $element;
 
-  // Add attributes required by the "field" theme. This overrides attributes
-  // set in $element. "#theme" attribute is only overridden for the
-  // $extra_element, therefore "#theme" attribute in $element is preserved and
+  // Add properties required by the "field" theme. This overrides properties
+  // set in $element. "#theme" property is only overridden for the
+  // $extra_element, therefore "#theme" property in $element is preserved and
   // used in rendering of $element.
   $overrides = array(
     '#theme' => 'field',
@@ -111,7 +111,7 @@ function pseudo_field_extra_field_process($element, $context) {
 
     // Loop through element children.
     foreach ($children as $key) {
-      // Only keys in "#items" attribute are required in
+      // Only keys in "#items" property are required in
       // template_preprocess_field().
       $extra_element['#items'][$key] = array();
 
@@ -120,7 +120,7 @@ function pseudo_field_extra_field_process($element, $context) {
     }
   }
   else {
-    // Only keys in "#items" attribute are required in
+    // Only keys in "#items" property are required in
     // template_preprocess_field().
     $extra_element['#items'][0] = array();
 

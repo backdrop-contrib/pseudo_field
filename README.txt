@@ -11,7 +11,7 @@ hook_field_extra_fields() lack the overall look and feel of real fields because
 real fields have labels and a theme around them while extra fields initially
 look pretty bare (unless you theme them manually).
 
-Just add "#pseudo_field" attribute set to TRUE to the extra field output render
+Just add "#pseudo_field" property set to TRUE to the extra field output render
 array and it will look just like the real field!
 
 Note: If extra field render array has children arrays, the extra field will be
@@ -21,16 +21,15 @@ field item.
 Usage
 -------------
 
-1. "#pseudo_field" - if this attribute is set to TRUE, extra field render array
+1. "#pseudo_field" - if this property is set to TRUE, extra field render array
 will be rendered with the "field" theme.
 2. "#title" - field label for the extra field. Defaults to the label of the
 extra field defined in hook_field_extra_fields().
 3. "#label_display" - defines the position of the extra field label. Available
-options are: "above", "inline" and "hidden". Defaults to "above" if "#title"
-attribute is set, "hidden" if value of "#title" attribute is empty.
-(Unfortunately, field label position cannot be set for extra fields in entity's
-view mode settings, so this option enables you to set the label position as
-needed.)
+options are: "above", "inline" and "hidden". Defaults to "above" or "hidden" if
+value of "#title" property is empty. (Unfortunately, field label position cannot
+be set for extra fields in entity's view mode settings, so this option enables
+you to set the label position as needed.)
 4. "#field_name" - defines a field name which is used in "field-name-FIELDNAME"
 class of the field HTML element. Defaults to the extra field key defined in
 hook_field_extra_fields().
