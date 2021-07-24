@@ -61,6 +61,7 @@ function pseudo_field_test_install_content_types() {
       // Save the content type.
       node_type_save($content_type_defaults);
       // Do not promote to the frontpage by default.
+      // TODO This variable was probably removed in Backdrop without replacement.
       variable_set('node_options_' . $content_type['type'], array('status'));
     }
     else {
@@ -70,7 +71,7 @@ function pseudo_field_test_install_content_types() {
 
   if (!empty($existing_type_registry)) {
     $t_args = array('%content-types' => implode(', ', $existing_type_registry));
-    drupal_set_message($t('The following content types already exist in the system: %content-types. They have not been recreated.', $t_args));
+    backdrop_set_message($t('The following content types already exist in the system: %content-types. They have not been recreated.', $t_args));
   }
 }
 
@@ -86,6 +87,7 @@ function pseudo_field_test_uninstall() {
     node_type_delete($type);
 
     // Remove variables.
+    // TODO This variable was probably removed in Backdrop without replacement.
     variable_del('node_options_' . $type);
   }
 }

@@ -1,0 +1,6 @@
+[PseudoFieldTestCase]
+name = Pseudo Field tests
+description = Ensure that the Pseudo Field module returns accurate data.
+group = Pseudo Field
+file = pseudo_field.test
+type = module

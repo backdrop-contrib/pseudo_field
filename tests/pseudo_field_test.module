@@ -1,27 +1,8 @@
 <?php
-
 /**
  * @file
  * Pseudo field Test module.
  */
-
-/**
- * Implements hook_help().
- */
-function pseudo_field_test_help($path, $arg) {
-  switch ($path) {
-    case 'admin/help#pseudo_field_test':
-      $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>';
-      $output .= t('Pseudo field Test module provides sample data for Pseudo field module test cases.');
-      if (module_exists('simpletest')) {
-        $output .= ' ' . t('See the <a href="@testing-url">Testing</a> page for available tests.', array('@testing-url' => url('admin/config/development/testing')));
-      }
-      $output .= '</p>';
-      return $output;
-  }
-}
 
 /**
  * Returns letters of the Greek alphabet.
@@ -31,9 +12,29 @@ function pseudo_field_test_help($path, $arg) {
  */
 function pseudo_field_test_greek_alphabet() {
   return array(
-    'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta',
-    'iota', 'kappa', 'lambda', 'mu', 'nu', 'xi', 'omicron', 'pi', 'rho',
-    'tau', 'upsilon', 'phi', 'chi', 'psi', 'omega',
+    'alpha',
+    'beta',
+    'gamma',
+    'delta',
+    'epsilon',
+    'zeta',
+    'eta',
+    'theta',
+    'iota',
+    'kappa',
+    'lambda',
+    'mu',
+    'nu',
+    'xi',
+    'omicron',
+    'pi',
+    'rho',
+    'tau',
+    'upsilon',
+    'phi',
+    'chi',
+    'psi',
+    'omega',
   );
 }
 

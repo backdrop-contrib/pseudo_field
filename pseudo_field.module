@@ -100,8 +100,8 @@ function pseudo_field_extra_field_process($element, $context) {
     '#entity_type' => $context['entity_type'],
     '#bundle' => $context['bundle'],
     '#label_display' => $label_display,
-    '#field_name' => (isset($element['#field_name']) ? drupal_html_class($element['#field_name']) : $context['field_machine_name']),
-    '#field_type' => (isset($element['#field_type']) ? drupal_html_class($element['#field_type']) : 'extra_field'),
+    '#field_name' => (isset($element['#field_name'])?backdrop_html_class($element['#field_name']) : $context['field_machine_name']),
+    '#field_type' => (isset($element['#field_type'])?backdrop_html_class($element['#field_type']) : 'extra_field'),
   );
   $extra_element =  $overrides + $extra_element;
 
@@ -116,7 +116,7 @@ function pseudo_field_extra_field_process($element, $context) {
       $extra_element['#items'][$key] = array();
 
       // Add rendered content to child element.
-      $extra_element[$key] = array('#markup' => drupal_render($element[$key]));
+      $extra_element[$key] = array('#markup' => backdrop_render($element[$key]));
     }
   }
   else {
@@ -125,7 +125,7 @@ function pseudo_field_extra_field_process($element, $context) {
     $extra_element['#items'][0] = array();
 
     // Add rendered content to child element.
-    $extra_element[0]['#markup'] = drupal_render($element);
+    $extra_element[0]['#markup'] = backdrop_render($element);
   }
 
   return $extra_element;
