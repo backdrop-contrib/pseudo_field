@@ -1,8 +1,8 @@
 Pseudo Field
 ============
 
-This module allows you to render an extra field like a real field with optional
-label.
+This module allows you to render an extra field like a real field with an
+optional label.
 
 The extra fields that can be attached to an entity using
 `hook_field_extra_fields()` lack the overall look and feel of real fields
