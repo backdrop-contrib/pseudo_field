@@ -28,7 +28,7 @@ class PseudoFieldWebTestCase extends BackdropWebTestCase {
    *
    * @var string
    */
-  protected $xpathRoot = '//div[@id=:id]/div[contains(@class, "content")]';
+  protected $xpathRoot = '//article[@id=:id]/div[contains(@class, "content")]';
 
   /**
    * Variables for xpath.
