@@ -6,5 +6,4 @@ package = Testing
 dependencies[] = field
 dependencies[] = text
 dependencies[] = pseudo_field
-;hidden = TRUE
-
+hidden = TRUE
